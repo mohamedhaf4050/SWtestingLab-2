@@ -18,6 +18,7 @@ class SearchTextElement(BasePageElement):
     #The locator for search box where search string is entered
     locator = 'q'
 
+
 class MainPage(BasePage):
     #Declares a variable that will contain the retrieved text
     search_text_element = SearchTextElement()
