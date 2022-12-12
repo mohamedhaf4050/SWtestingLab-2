@@ -3,36 +3,42 @@
 import unittest
 from selenium import webdriver
 import page
+import time
 
-# Test we're going to perform on the website
-class PythonOrgSearch(unittest.TestCase): #Inherits from unittest.TestCase
+
+
+
+class PythonOrgSearch(unittest.TestCase): 
     """A sample test class to show how page object works"""
 
-    # Setup is the first method runs each time we test our website
     def setUp(self): 
-        # Creating the webdriver we're going to use
         self.driver = webdriver.Chrome("C:\Program Files (x86)\chromedriver.exe")
-
-        # Getting the website we want to test
         self.driver.get("http://www.python.org")
 
-    #To create a test that automatically runs when we run our unit test
-    #Create a method startswith "test": e.g., testMethod(), testNext(), testaaa()
-    #Any method doesn't start with "test" is No a Test methods e.g.:
-    #ntest(), Test(),TEST(), aasda(), atest()
-    
     #Test 1:
     def test_title(self):
-        #Load the main page. In this case the home page of Python.org.
+        print("Test 1")
         main_page = page.MainPage(self.driver)
-        
-        #Checks if the word "Python" is in title
         self.assertTrue(main_page.is_title_matches(), "python.org title doesn't match.")
     
+    #Test 2:
+    def test_search_in_python_org(self):
+        print("Test 2")
+        #Load the main page. In this case the home page of Python.org.
+        main_page = page.MainPage(self.driver)
+        #Checks if the word "Python" is in title
+        self.assertTrue(main_page.is_title_matches(), "python.org title doesn't match.")
+        #Sets the text of search textbox to "pycon"
+        main_page.search_text_element = "pycon"
+        main_page.click_go_button()
+        search_results_page = page.SearchResultsPage(self.driver)
 
-
+        #Verifies that the results page is not empty
+        self.assertTrue(search_results_page.is_results_found(), "No results found.")
+        
     def tearDown(self):
-            self.driver.close()
+        pass
+        # self.driver.close()
     
 if __name__ == "__main__":
     unittest.main()
