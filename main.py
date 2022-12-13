@@ -1,16 +1,10 @@
-
-
 import unittest
 from selenium import webdriver
 import page
 import time
 
-
-
-
 class PythonOrgSearch(unittest.TestCase): 
     """A sample test class to show how page object works"""
-
     def setUp(self): 
         self.driver = webdriver.Chrome("C:\Program Files (x86)\chromedriver.exe")
         self.driver.get("http://www.python.org")
@@ -26,8 +20,7 @@ class PythonOrgSearch(unittest.TestCase):
         print("Test 2")
         #Load the main page. In this case the home page of Python.org.
         main_page = page.MainPage(self.driver)
-        #Checks if the word "Python" is in title
-        self.assertTrue(main_page.is_title_matches(), "python.org title doesn't match.")
+
         #Sets the text of search textbox to "pycon"
         main_page.search_text_element = "pycon"
         main_page.click_go_button()
@@ -37,8 +30,7 @@ class PythonOrgSearch(unittest.TestCase):
         self.assertTrue(search_results_page.is_results_found(), "No results found.")
         
     def tearDown(self):
-        pass
-        # self.driver.close()
+        self.driver.close()
     
 if __name__ == "__main__":
     unittest.main()
